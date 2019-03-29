@@ -1,0 +1,21 @@
+{
+    "registration":{
+        "firstname":"harleen",
+        "lastname":"kaur",
+        "email":"harlen@gmail.com",
+        "password":"12345678"
+    },
+    "login":{
+        "email":"harlen@gmail.com",
+        "password":"12345678"
+    },
+    "forgot":
+    {
+        "email":"harlen@gmail.com"
+    },
+    "reset":
+    {
+        "password":"22345678",
+        "headers":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJfaWQiOiI1YzgzOGMxMDRlOGFhNjRjMmRmZTNhNmEifSwiaWF0IjoxNTUyMTI1MDEyLCJleHAiOjE1NTIyMTE0MTJ9.SuLUvgyGuiQwaA8TPi9fzosmvEqkr-xoIeNpM-n7uh0"
+    }
+}
