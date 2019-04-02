@@ -23,4 +23,9 @@ router.post('/forgotPassword', userController.forgotPassword);
     userController.setPassword
   );
   router.post('/createNote', middle.checkToken, noteController.createNote);
+  router.get('/getNotes', middle.checkToken, noteController.getNotes)
+router.put('/updateColor', middle.checkToken, noteController.updateColor);
+router.put('/reminder', middle.checkToken, noteController.reminder);
+router.put('/isArchived', middle.checkToken, noteController.isArchived);
+
 module.exports = router;
