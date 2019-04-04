@@ -1,6 +1,6 @@
 /******************************************************************************
  *  @Purpose        : To provide routes to each webpages. 
- *  @file           : routes.js        
+ *  @file           : router.js        
  *  @author         : KAMALAKSHI C SWAMY
  *  @since          : 08-03-2019
  ******************************************************************************/
@@ -27,5 +27,6 @@ router.post('/forgotPassword', userController.forgotPassword);
 router.put('/updateColor', middle.checkToken, noteController.updateColor);
 router.put('/reminder', middle.checkToken, noteController.reminder);
 router.put('/isArchived', middle.checkToken, noteController.isArchived);
+router.put('/isTrashed', middle.checkToken, noteController.isTrashed);
 
 module.exports = router;

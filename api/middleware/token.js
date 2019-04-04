@@ -1,3 +1,9 @@
+/******************************************************************************
+ *  @Purpose        : Method is used to generate tokens
+ *  @file           : token.js        
+ *  @author         : KAMALAKSHI C SWAMY
+ *  @since          : 19-03-2019
+ ******************************************************************************/
 const jwt = require("jsonwebtoken");
 module.exports = {
   GenerateToken(payload) {

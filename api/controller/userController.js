@@ -12,7 +12,6 @@ const token = require('../middleware/token');
 // const express = require('express');
 // const redis = require('redis');
 require("dotenv").config();
-
 // var env = process.env.NODE_ENV || "local";
 /**
  * @param {*} req 

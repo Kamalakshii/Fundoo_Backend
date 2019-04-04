@@ -1,3 +1,9 @@
+/*****************************************************************************************
+ *  @Purpose        : To create note controller to handle the incoming data. 
+ *  @file           : noteController.js        
+ *  @author         : KAMALAKSHI C SWAMY
+ *  @since          : 30-03-2019
+ *****************************************************************************************/
 const noteService = require('../services/noteService');
 /**
  * @description:it handles the creating note data
@@ -161,5 +167,38 @@ exports.isArchived = (req, res) => {
         }
     } catch (error) {
         res.send(error);
+    }
+}
+/**
+ * @description: 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.isTrashed = (req, res) => {
+    try {
+        req.checkBody('noteID', 'noteID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            noteID = req.body.noteID;
+            noteService.isTrashed(noteID, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                } else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error)
     }
 }

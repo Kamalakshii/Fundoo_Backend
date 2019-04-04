@@ -1,3 +1,9 @@
+/******************************************************************************
+ *  @Purpose        : To create a note schema and store data into database.
+ *  @file           : noteModel.js        
+ *  @author         : KAMALAKSHI C SWAMY
+ *  @since          : 30-03-2019
+ ******************************************************************************/
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 /**
@@ -127,4 +133,5 @@ noteModel.prototype.isArchived = (noteID, archiveNote, callback) => {
             }
         });
 };
+
 module.exports = new noteModel();
