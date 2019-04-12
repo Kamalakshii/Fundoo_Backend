@@ -33,18 +33,31 @@ var noteSchema = new mongoose.Schema({
     archive: {
         type: Boolean
     },
+    trash: {
+        type: Boolean
+    }
 }, {
-    timestamps: true
-});
-function noteModel() {}
+        timestamps: true
+    });
+function noteModel() { }
 var note = mongoose.model('Note', noteSchema);
 noteModel.prototype.addNotes = (objectNote, callback) => {
-   // console.log("data====>", objectNote);
+    console.log("data====>", objectNote.body);
     const noteModel = new note(objectNote.body);
+    //   const noteModel = new note({
+    //     "userId": req.body.userId,
+    //     "title": req.body.title,
+    //     "description": req.body.description,
+    //     "reminder": req.body.reminder,
+    //     "color": req.body.color,
+    //     "archive": req.body.archive,
+    //     "trash": req.body.trash
+    // });
     noteModel.save((err, result) => {
         if (err) {
             callback(err);
         } else {
+           // console.log("result create note",result);
             callback(null, result);
         }
     })
@@ -73,8 +86,8 @@ noteModel.prototype.getNotes = (id, callback) => {
  */
 noteModel.prototype.updateColor = (noteID, updateParams, callback) => {
     note.findOneAndUpdate({
-            _id: noteID
-        }, {
+        _id: noteID
+    }, {
             $set: {
                 color: updateParams
             }
@@ -95,13 +108,13 @@ noteModel.prototype.updateColor = (noteID, updateParams, callback) => {
  */
 noteModel.prototype.reminder = (noteID, reminderParams, callback) => {
     note.findOneAndUpdate({
-            _id: noteID
-        }, {
+        _id: noteID
+    }, {
             $set: {
                 reminder: reminderParams
             }
         },
-        (err, result) => {    
+        (err, result) => {
             if (err) {
                 callback(err)
             } else {
@@ -117,8 +130,8 @@ noteModel.prototype.reminder = (noteID, reminderParams, callback) => {
  */
 noteModel.prototype.isArchived = (noteID, archiveNote, callback) => {
     note.findOneAndUpdate({
-            _id: noteID
-        }, {
+        _id: noteID
+    }, {
             $set: {
                 archive: archiveNote,
                 trash: false,
@@ -133,5 +146,49 @@ noteModel.prototype.isArchived = (noteID, archiveNote, callback) => {
             }
         });
 };
+/**
+ * 
+ * @param {*} noteID 
+ * @param {*} trashParams 
+ * @param {*} callback 
+ */
+noteModel.prototype.isTrashed = (noteID, trashNote, callback) => {
+
+    note.findOneAndUpdate({
+        _id: noteID
+    }, {
+            $set: {
+                trash: trashNote.status,
+                pinned: false,
+                archive: false
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                return callback(null, trashNote)
+            }
+        });
+}
+
+noteModel.prototype.getTrashStatus = (id, callback) => {
+      console.log("getTrashStatus",id);
+
+    note.findOne({ _id: id }, (err, result) => {
+        //console.log("id", id);
+        if (err) {
+            callback(err)
+        } else {
+            console.log("status", result)
+            return callback(null, result.trash)
+        }
+    })
+}
+
+
+
+
+
 
 module.exports = new noteModel();

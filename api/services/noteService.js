@@ -18,7 +18,7 @@ exports.createNote = (data, callback) => {
             console.log("service error");
             callback(err);
         } else {
-            // console.log("In service", result);
+           //  console.log("in service", result);
             callback(null, result);
         }
     });
@@ -100,11 +100,14 @@ exports.isTrashed = (paramID, callback) => {
         if (err) {
             callback(err);
         } else {
+            //console.log("status of that note in services",status);
+            
             if (status === true) {
                 let data = {
                     status: false
                 }
                 noteModel.isTrashed(paramID, data, (err, result) => {
+                   
                     if (err) {
                         console.log("service error");
                         callback(err);
@@ -129,4 +132,19 @@ exports.isTrashed = (paramID, callback) => {
         }
     })
 }
+/**
+ * 
+ * @param {*} noteID 
+ * @param {*} callback 
+ */
+exports.deleteNote = (noteID, callback) => {
 
+    noteModel.deleteNote(noteID, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err)
+        } else {
+            return callback(null, result)
+        }
+    })
+}

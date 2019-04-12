@@ -176,7 +176,10 @@ exports.isArchived = (req, res) => {
  */
 exports.isTrashed = (req, res) => {
     try {
+        console.log("trash controller-->",req.body);
+        
         req.checkBody('noteID', 'noteID required').not().isEmpty();
+      //  req.checkBody('trash', 'trash required').not().isEmpty();
         var errors = req.validationErrors();
         var response = {};
         if (errors) {
@@ -186,6 +189,8 @@ exports.isTrashed = (req, res) => {
         } else {
             var responseResult = {};
             noteID = req.body.noteID;
+        
+            
             noteService.isTrashed(noteID, (err, result) => {
                 if (err) {
                     responseResult.status = false;
@@ -199,6 +204,40 @@ exports.isTrashed = (req, res) => {
             })
         }
     } catch (error) {
-        res.send(error)
+        res.send(error);
     }
 }
+/**
+ * @description: 
+ * @param {*} req 
+ * @param {*} res 
+ */
+// exports.deleteNote = (req, res) => {
+//     try {
+//         req.checkBody('noteID', 'noteID required').not().isEmpty();
+//         var errors = req.validationErrors();
+//         var response = {};
+//         if (errors) {
+//             response.status = false;
+//             response.error = errors;
+//             return res.status(422).send(response);
+//         } else {
+//             var responseResult = {};
+//             // noteID = req.body.noteID;
+//             noteService.deleteNote(req, (err, result) => {
+//                 if (err) {
+//                     responseResult.status = false;
+//                     responseResult.error = err;
+//                     res.status(500).send(responseResult);;
+//                 } else {
+//                     responseResult.status = true;
+//                     responseResult.data = result;   
+//                     res.status(200).send(responseResult);
+//                 }
+//             })
+//         }
+//     } catch (error) {
+
+//         res.send(error)
+//     }
+// }

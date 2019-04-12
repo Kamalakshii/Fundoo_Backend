@@ -7,7 +7,7 @@
  ******************************************************************************/
 var jwt = require("jsonwebtoken");
 exports.checkToken = (req, res, next) => {
-  console.log("request in authentication", req.body);
+  //console.log("request in authentication", req.body);
   var token1 = req.headers["token"];
   console.log("token-------->", token1);
   if (token1) {
@@ -32,7 +32,7 @@ exports.checkToken = (req, res, next) => {
   }
 };
 exports.resetToken = (req, res, next) => {
-  console.log("request in authentication", req.body);
+ // console.log("request in authentication", req.body);
 
   var token1 = req.headers["token"];
 

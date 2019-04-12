@@ -135,7 +135,7 @@ exports.registration = (req, res) => {
     }
 };
 exports.forgotPassword = (req, res) => {
-    console.log("request in controller ==>", req.body);
+   // console.log("request in controller ==>", req.body);
     try {
         req.checkBody('email', 'Invaild email').isEmail();
         var responseResult = {};
@@ -196,9 +196,6 @@ exports.setPassword = (req, res) => {
                     const payload = {
                         user_id: responseResult.result._id
                     }
-                    //console.log("pyload is ",payload);
-                    // const obj = token.GenerateTokenAuth(payload);
-                    // responseResult.token = obj;
                     res.status(200).send(responseResult);
 
                 }
@@ -206,5 +203,28 @@ exports.setPassword = (req, res) => {
         }
     } catch (err) {
         res.send(err);
+    }
+}
+exports.setProfilePic = (req, res) => {
+    try {
+         //console.log("req-------------------->",req.decoded);
+        // console.log("req-------------------->",req.file.location)
+        var responseResult = {};
+        userId = req.decoded.payload.user_id;
+        let image = (req.file.location)
+        userService.setProfilePic(userId, image, (err, result) => {
+            // console.log("image=>", result);
+            if (err) {
+                responseResult.success = false;
+                responseResult.error = err;
+                res.status(500).send(responseResult)
+            } else {
+                responseResult.status = true;
+                responseResult.data = result;
+                res.status(200).send(responseResult);
+            }
+        })
+    } catch (error) {
+        res.send(error);
     }
 }

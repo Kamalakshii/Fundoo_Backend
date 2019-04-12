@@ -10,7 +10,8 @@ const bodyParser = require('body-parser');
 /**
  *  To give path to each file
  */
-const router = require("../Server/api/routes/router")
+const router = require("../Server/api/routes/userRouter")
+const router1 = require("../Server/api/routes/notesRouter")
 /** 
  * to create express app
 */
@@ -53,6 +54,7 @@ console.log("Successfully connected to the database");
 });
 require("http").createServer(app);
     app.use("/",router);
+    app.use("/",router1);
 /** 
  *  define a simple route
 */ 
