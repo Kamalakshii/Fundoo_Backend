@@ -18,7 +18,7 @@ const router1 = require("./api/routes/notesRouter")
  const app = express(); 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-//const chatControllers = require("../Server/api/controller/chatController")
+
 /** 
  * To perform validations
 */
