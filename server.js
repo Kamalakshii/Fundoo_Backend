@@ -10,8 +10,8 @@ const bodyParser = require('body-parser');
 /**
  *  To give path to each file
  */
-const router = require("../Server/api/routes/userRouter")
-const router1 = require("../Server/api/routes/notesRouter")
+const router = require("./api/routes/userRouter")
+const router1 = require("./api/routes/notesRouter")
 /** 
  * to create express app
 */
@@ -27,7 +27,7 @@ app.use(expressValidator());
 /**
  * To get the path of database
  **/
-const databaseConfig = require("../Server/configuration/dbConfiguration");
+const databaseConfig = require("./configuration/dbConfiguration");
 /**
  *  Configuring the database
  **/
@@ -59,7 +59,7 @@ require("http").createServer(app);
  *  define a simple route
 */ 
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to Fundoo"});
+    res.json("Welcome to Fundoo");
 });
 
 // to listen for requests
