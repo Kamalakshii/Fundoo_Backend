@@ -208,36 +208,70 @@ exports.isTrashed = (req, res) => {
     }
 }
 /**
- * @description: 
+ * 
  * @param {*} req 
  * @param {*} res 
  */
-// exports.deleteNote = (req, res) => {
-//     try {
-//         req.checkBody('noteID', 'noteID required').not().isEmpty();
-//         var errors = req.validationErrors();
-//         var response = {};
-//         if (errors) {
-//             response.status = false;
-//             response.error = errors;
-//             return res.status(422).send(response);
-//         } else {
-//             var responseResult = {};
-//             // noteID = req.body.noteID;
-//             noteService.deleteNote(req, (err, result) => {
-//                 if (err) {
-//                     responseResult.status = false;
-//                     responseResult.error = err;
-//                     res.status(500).send(responseResult);;
-//                 } else {
-//                     responseResult.status = true;
-//                     responseResult.data = result;   
-//                     res.status(200).send(responseResult);
-//                 }
-//             })
-//         }
-//     } catch (error) {
-
-//         res.send(error)
-//     }
-// }
+exports.editTitle = (req, res) => {
+    try {
+        req.checkBody('noteID', 'noteID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            noteID = req.body.noteID;
+            title = req.body.title;
+            noteService.editTitle(noteID, title, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                } else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.editDescription = (req, res) => {
+    try {
+        req.checkBody('noteID', 'noteID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            noteID = req.body.noteID;
+            description = req.body.description;
+            noteService.editDescription(noteID, description, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                } else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}

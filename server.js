@@ -61,7 +61,6 @@ require("http").createServer(app);
 app.get('/', (req, res) => {
     res.json("Welcome to Fundoo");
 });
-
 // to listen for requests
 const server = app.listen(4000, () => {
     console.log("The server is listening on port number 4000");

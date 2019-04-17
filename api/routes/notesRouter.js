@@ -15,4 +15,6 @@ router.put('/updateColor', middle.checkToken, noteController.updateColor);
 router.put('/reminder', middle.checkToken, noteController.reminder);
 router.put('/isArchived', middle.checkToken, noteController.isArchived);
 router.put('/isTrash',middle.checkToken,noteController.isTrashed);
+router.put('/editTitle', middle.checkToken, noteController.editTitle);
+router.put('/editDescription', middle.checkToken, noteController.editDescription);
 module.exports = router;

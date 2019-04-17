@@ -185,6 +185,51 @@ noteModel.prototype.getTrashStatus = (id, callback) => {
         }
     })
 }
+/**
+ * 
+ * @param {*} noteID 
+ * @param {*} titleParams 
+ * @param {*} callback 
+ */
+noteModel.prototype.editTitle = (noteID, titleParams, callback) => {
+    note.findOneAndUpdate({
+            _id: noteID
+        }, {
+            $set: {
+                title: titleParams,
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                return callback(null, titleParams)
+            }
+
+        });
+};
+/**
+ * 
+ * @param {*} noteID 
+ * @param {*} descParams 
+ * @param {*} callback 
+ */
+noteModel.prototype.editDescription = (noteID, descParams, callback) => {
+    note.findOneAndUpdate({
+            _id: noteID
+        }, {
+            $set: {
+                description: descParams,
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                return callback(null, descParams)
+            }
+        });
+};
 
 
 

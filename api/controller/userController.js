@@ -98,7 +98,6 @@ exports.login = (req, res) => {
 exports.registration = (req, res) => {
     try {
         console.log("regggg...", req.body);
-
         req.checkBody('firstname', 'Invaild firstname').isLength({
             min: 3
         }).isAlpha();
