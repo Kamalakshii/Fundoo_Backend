@@ -166,4 +166,35 @@ exports.editDescription = (paramID, paramData, callback) => {
         }
     })
 }
-
+/**
+ * 
+ * @param {*} paramID 
+ * @param {*} paramData 
+ * @param {*} callback 
+ */
+exports.isPinned = (paramID, paramData, callback) => {
+    console.log("in services", paramID, paramData);
+    noteModel.isPinned(paramID, paramData, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+/**
+ * 
+ * @param {*} noteID 
+ * @param {*} callback 
+ */
+exports.deleteNote = (noteID, callback) => {
+    noteModel.deleteNote(noteID, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err)
+        } else {
+            return callback(null, result)
+        }
+    })
+}

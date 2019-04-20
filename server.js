@@ -1,6 +1,6 @@
 /******************************************************************************
  *  @Purpose        : To create a server to connect with front end and get the 
-                     request and send response to client
+                      request and send response to client
  *  @file           : server.js        
  *  @author         : KAMALAKSHI C SWAMY
  *  @since          : 04-03-2019
@@ -56,7 +56,7 @@ require("http").createServer(app);
     app.use("/",router);
     app.use("/",router1);
 /** 
- *  define a simple route
+ *  define a simple router
 */ 
 app.get('/', (req, res) => {
     res.json("Welcome to Fundoo");
@@ -65,26 +65,4 @@ app.get('/', (req, res) => {
 const server = app.listen(4000, () => {
     console.log("The server is listening on port number 4000");
 });
-module.exports = app;
-/**
- * socket connection
- */
-// const io = require('socket.io').listen(server)
-// io.sockets.on('connection', function (socket) {
-//     //Whenever someone connects this gets executed
-//     console.log("user is connected")
-//     socket.on('new_msg', function (req) {
-//         console.log("request in server js ==>",req);
-//         chatControllers.addMessage(req, (err, result) => {
-//             if (err) {
-//                 console.log("Error on server side while receiving the data");
-//             }
-//             else {
-              
-//             }
-//             io.emit(req.recieverId, result);
-//             io.emit(req.senderId,result);
-//         })
-//     })
-// })
-module.exports = app;
+// module.exports = app;

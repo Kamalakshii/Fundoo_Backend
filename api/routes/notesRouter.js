@@ -17,4 +17,6 @@ router.put('/isArchived', middle.checkToken, noteController.isArchived);
 router.put('/isTrash',middle.checkToken,noteController.isTrashed);
 router.put('/editTitle', middle.checkToken, noteController.editTitle);
 router.put('/editDescription', middle.checkToken, noteController.editDescription);
+router.put('/isPinned', middle.checkToken, noteController.isPinned);
+router.post('/deleteNote', middle.checkToken, noteController.deleteNote);
 module.exports = router;

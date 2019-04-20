@@ -30,13 +30,18 @@ var noteSchema = new mongoose.Schema({
     reminder: {
         type: String
     },
+    pinned: {
+        type: Boolean,
+    },
     archive: {
         type: Boolean
     },
     trash: {
         type: Boolean
     }
-}, {
+    
+},
+ {
         timestamps: true
     });
 function noteModel() { }
@@ -230,8 +235,51 @@ noteModel.prototype.editDescription = (noteID, descParams, callback) => {
             }
         });
 };
-
-
+/**
+ * 
+ * @param {*} noteID 
+ * @param {*} pinParams 
+ * @param {*} callback 
+ */
+noteModel.prototype.isPinned = (noteID, pinParams, callback) => {
+    note.findOneAndUpdate({
+            _id: noteID
+        }, {
+            $set: {
+                pinned: pinParams,
+                trash: false,
+                archive: false
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                return callback(null, pinParams)
+            }
+        });
+};
+/**
+ * @description:
+ * @param {*} data 
+ * @param {*} callback 
+ */
+noteModel.prototype.deleteNote = (data, callback) =>
+ {
+    note.deleteOne({
+        _id: data.body.noteID
+    }, (err, result) => {
+        if (err) {
+            callback(err)
+        } else {
+            const obj = {
+                status: 200,
+                msg: "note is deleted successfully"
+            }
+            return callback(null, obj)
+        }
+    })
+}
 
 
 
