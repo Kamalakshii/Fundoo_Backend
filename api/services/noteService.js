@@ -1,12 +1,14 @@
 /******************************************************************************
  *  @Purpose        : To create note services that will send the incoming data 
-                    to noteModel and save that data to database and at login 
-                    time fetching correct information from database.
+                      to noteModel and save that data to database and at login 
+                      time fetching correct information from database.
  *  @file           : noteService.js        
  *  @author         : KAMALAKSHI C SWAMY
  *  @since          : 01-04-2019
  ******************************************************************************/
 const noteModel = require('../model/noteModel');
+const notificationModel = require("../model/notificationModel")
+const sendPush = require("../../send.js")
 /**
  * 
  * @param {*} data 
@@ -33,7 +35,7 @@ exports.getNotes = (data, callback) => {
             console.log("service error");
             callback(err);
         } else {
-        console.log("In service", result);
+       // console.log("In service", result);
             callback(null, result);
         }
     });
@@ -167,7 +169,6 @@ exports.editDescription = (paramID, paramData, callback) => {
     })
 }
 /**
- * 
  * @param {*} paramID 
  * @param {*} paramData 
  * @param {*} callback 
@@ -193,6 +194,47 @@ exports.deleteNote = (noteID, callback) => {
         if (err) {
             console.log("service error");
             callback(err)
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+exports.notification = (req , callback) => {
+    notificationModel.notification(req, (err,result) =>
+    {
+        if(err){
+            console.log("service error");
+            callback(err);
+        }
+        else{
+            return callback(null,result);
+        }
+    })
+}
+exports.sendNotification = (user_id,callback)=>{
+    notificationModel.sendNotification(user_id,(err,result)=>
+    {
+        if(err){
+            console.log("service error");
+    callback(err);            
+        }
+        else{
+            console.log("in service",result);
+            sendPush.sendNotify(result);
+            return callback(null,result);
+        }
+    })
+}
+/**
+ * @description:it will send add label data to model
+ * @param {*request from frontend} labelData 
+ * @param {*response to backend} callback 
+ */
+exports.addLabel = (labelData, callback) => {
+    noteModel.addLabel(labelData, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err);
         } else {
             return callback(null, result)
         }

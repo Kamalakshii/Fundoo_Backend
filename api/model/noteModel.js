@@ -38,12 +38,34 @@ var noteSchema = new mongoose.Schema({
     },
     trash: {
         type: Boolean
-    }
-    
+    },
+    label: [
+        {
+            type: String,
+            ref: "labelSchema"
+        }
+    ]
 },
  {
         timestamps: true
     });
+
+    var labelSchema = new mongoose.Schema({
+        userID: {
+            type: Schema.Types.ObjectId,
+            ref: 'UserSchema'
+        },
+        label: {
+            type: String,
+            require: [true, "Label require"],
+            unique: true
+        }
+    }, {
+            timestamps: true
+        }
+    )
+    var label = mongoose.model('Label', labelSchema)
+
 function noteModel() { }
 var note = mongoose.model('Note', noteSchema);
 noteModel.prototype.addNotes = (objectNote, callback) => {
@@ -280,8 +302,22 @@ noteModel.prototype.deleteNote = (data, callback) =>
         }
     })
 }
-
-
-
-
+/**
+ * @description:it will add the label
+ * @param {*request from frontend} labelData 
+ * @param {*response to backend} callback 
+ */
+noteModel.prototype.addLabel = (labelData, callback) => {
+    console.log("ultimate save", labelData);
+    const Data = new label(labelData);
+    Data.save((err, result) => {
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            console.log("label result", result);
+            return callback(null, result);
+        }
+    })
+};
 module.exports = new noteModel();

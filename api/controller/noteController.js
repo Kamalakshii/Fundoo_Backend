@@ -5,6 +5,7 @@
  *  @since          : 30-03-2019
  *****************************************************************************************/
 const noteService = require('../services/noteService');
+const labelService = require('../services/noteService');
 /**
  * @description:it handles the creating note data
  * @param {*request from frontend} req 
@@ -45,7 +46,7 @@ exports.createNote = (req, res) => {
 }
 exports.getNotes = (req, res) => {
     try {
-    console.log("note Controller", req.body);
+        console.log("note Controller", req.body);
         var responseResult = {};
         noteService.getNotes(req, (err, result) => {
             if (err) {
@@ -176,10 +177,10 @@ exports.isArchived = (req, res) => {
  */
 exports.isTrashed = (req, res) => {
     try {
-        console.log("trash controller-->",req.body);
-        
+        console.log("trash controller-->", req.body);
+
         req.checkBody('noteID', 'noteID required').not().isEmpty();
-      //  req.checkBody('trash', 'trash required').not().isEmpty();
+        //  req.checkBody('trash', 'trash required').not().isEmpty();
         var errors = req.validationErrors();
         var response = {};
         if (errors) {
@@ -189,8 +190,8 @@ exports.isTrashed = (req, res) => {
         } else {
             var responseResult = {};
             noteID = req.body.noteID;
-        
-            
+
+
             noteService.isTrashed(noteID, (err, result) => {
                 if (err) {
                     responseResult.status = false;
@@ -330,7 +331,7 @@ exports.deleteNote = (req, res) => {
                 if (err) {
                     responseResult.status = false;
                     responseResult.error = err;
-                    res.status(500).send(responseResult);;
+                    res.status(500).send(responseResult);
                 } else {
                     responseResult.status = true;
                     responseResult.data = result;
@@ -339,7 +340,111 @@ exports.deleteNote = (req, res) => {
             })
         }
     } catch (error) {
-
         res.send(error)
+    }
+}
+exports.notification = (req, res) => {
+    try {
+       // console.log("in controllerrrrrrrrrrr", req);
+
+        req.checkBody('pushToken', 'pushToken required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        }
+        else {
+            var responseResult = {};
+            noteService.notification(req, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    }
+    catch (error) {
+      console.log(error);  
+    }
+}
+exports.sendNotification=(req,res)=>{
+    try{
+       console.log("userId is",req.params.userId);
+       
+        var errors = req.validationErrors();
+        var response = {};
+        if(errors){
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        }
+        else{
+            var responseResult = {};
+            var user_id=req.params.userId;
+            noteService.sendNotification(user_id,(err,result)=>{
+                if(err){
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else{
+                    responseResult.status = true;
+                    responseResult.data = "Notification sent";
+                    res.status(200).send(responseResult);
+                }
+
+            })
+        }
+        }
+        catch(error)
+        {
+            console.log(error);
+            
+        }
+}
+/**
+ * @description:It handles the add labels to notes
+ * @param {*request from frontend} req 
+ * @param {*response from backend} res 
+ */
+exports.addLabel = (req, res) => {
+    try {
+        // req.checkBody('userID', 'userID required').not().isEmpty();
+        req.checkBody('label', 'label required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            const labelData = {
+                userID: req.decoded.payload.user_id,
+                label: req.body.label
+            }
+            labelService.addLabel(labelData, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error);
     }
 }
