@@ -13,10 +13,10 @@ module.exports ={
        body: "its proper"
     }
   };
-  // var options = {
-  //   priority: "high",
-  //   timeToLive: 60 * 60
-  // };
+  var options = {
+    priority: "high",
+    timeToLive: 60 * 60
+  };
   admin.messaging().sendToDevice(registrationToken, payload, options)
   .then(function(response) {
     console.log("Successfully sent message:", response);

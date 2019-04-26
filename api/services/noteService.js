@@ -225,6 +225,30 @@ exports.sendNotification = (user_id,callback)=>{
         }
     })
 }
+exports.setReminder=()=>
+{
+    var d1 = new Date();
+    d2 = new Date(d1);
+    d2.setMinutes(d1.getMinutes()+1);
+    d1.toLocaleString();
+    d2.toLocaleString();
+    noteModel.reminderMessage(d1,d2,(err,result)=>
+    {
+        if(err){
+            console.log("service error");
+            callback(err);
+        }
+        else{
+            var temp = [];
+            temp[0] = user_id;
+            temp[1] = title;
+            temp[2] = description;
+            console.log("in service",result);
+            sendPush.sendNotify(result);
+            return callback(null,result)          
+        }
+    })
+}
 /**
  * @description:it will send add label data to model
  * @param {*request from frontend} labelData 

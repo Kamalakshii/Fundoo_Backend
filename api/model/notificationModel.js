@@ -6,6 +6,7 @@
  ******************************************************************************/
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+var schedule = require('node-schedule');
 /**
  * creating notification schema using mongoose
  */
@@ -43,7 +44,7 @@ notificationModel.prototype.notification = (req, callback) => {
             }
         })
 }
-notificationModel.prototype.sendNotification = (user_id, callback) => {
+notificationModel.prototype.sendNotification = (user_id, callback) => {  
     notification.findOne({
         userId: user_id
     },
@@ -58,4 +59,5 @@ notificationModel.prototype.sendNotification = (user_id, callback) => {
             }
         })
 }
+
 module.exports = new notificationModel();

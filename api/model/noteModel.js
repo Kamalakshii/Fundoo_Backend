@@ -6,6 +6,7 @@
  ******************************************************************************/
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var schedule = require('node-schedule');
 /**
  * @description:Creating note schema using mongoose
  **/
@@ -46,25 +47,25 @@ var noteSchema = new mongoose.Schema({
         }
     ]
 },
- {
+    {
         timestamps: true
     });
 
-    var labelSchema = new mongoose.Schema({
-        userID: {
-            type: Schema.Types.ObjectId,
-            ref: 'UserSchema'
-        },
-        label: {
-            type: String,
-            require: [true, "Label require"],
-            unique: true
-        }
-    }, {
-            timestamps: true
-        }
-    )
-    var label = mongoose.model('Label', labelSchema)
+var labelSchema = new mongoose.Schema({
+    userID: {
+        type: Schema.Types.ObjectId,
+        ref: 'UserSchema'
+    },
+    label: {
+        type: String,
+        require: [true, "Label require"],
+        unique: true
+    }
+}, {
+        timestamps: true
+    }
+)
+var label = mongoose.model('Label', labelSchema)
 
 function noteModel() { }
 var note = mongoose.model('Note', noteSchema);
@@ -84,7 +85,7 @@ noteModel.prototype.addNotes = (objectNote, callback) => {
         if (err) {
             callback(err);
         } else {
-           // console.log("result create note",result);
+            // console.log("result create note",result);
             callback(null, result);
         }
     })
@@ -134,6 +135,7 @@ noteModel.prototype.updateColor = (noteID, updateParams, callback) => {
  * @param {*} callback 
  */
 noteModel.prototype.reminder = (noteID, reminderParams, callback) => {
+
     note.findOneAndUpdate({
         _id: noteID
     }, {
@@ -200,7 +202,7 @@ noteModel.prototype.isTrashed = (noteID, trashNote, callback) => {
 }
 
 noteModel.prototype.getTrashStatus = (id, callback) => {
-      console.log("getTrashStatus",id);
+    console.log("getTrashStatus", id);
 
     note.findOne({ _id: id }, (err, result) => {
         //console.log("id", id);
@@ -220,8 +222,8 @@ noteModel.prototype.getTrashStatus = (id, callback) => {
  */
 noteModel.prototype.editTitle = (noteID, titleParams, callback) => {
     note.findOneAndUpdate({
-            _id: noteID
-        }, {
+        _id: noteID
+    }, {
             $set: {
                 title: titleParams,
             }
@@ -243,8 +245,8 @@ noteModel.prototype.editTitle = (noteID, titleParams, callback) => {
  */
 noteModel.prototype.editDescription = (noteID, descParams, callback) => {
     note.findOneAndUpdate({
-            _id: noteID
-        }, {
+        _id: noteID
+    }, {
             $set: {
                 description: descParams,
             }
@@ -265,8 +267,8 @@ noteModel.prototype.editDescription = (noteID, descParams, callback) => {
  */
 noteModel.prototype.isPinned = (noteID, pinParams, callback) => {
     note.findOneAndUpdate({
-            _id: noteID
-        }, {
+        _id: noteID
+    }, {
             $set: {
                 pinned: pinParams,
                 trash: false,
@@ -286,8 +288,7 @@ noteModel.prototype.isPinned = (noteID, pinParams, callback) => {
  * @param {*} data 
  * @param {*} callback 
  */
-noteModel.prototype.deleteNote = (data, callback) =>
- {
+noteModel.prototype.deleteNote = (data, callback) => {
     note.deleteOne({
         _id: data.body.noteID
     }, (err, result) => {
@@ -301,6 +302,30 @@ noteModel.prototype.deleteNote = (data, callback) =>
             return callback(null, obj)
         }
     })
+}
+noteModel.prototype.reminderMessage = (d1, d2, callback) => {
+    note.find((err, result) => {
+            if (err) {
+                callback(err);
+            }
+            else {
+                var array = [];
+                result.forEach(function (value) {
+                    if (value.reminder.length > 1) {
+                        if (value.reminder >= d1 && value.reminder <= d2) {
+                            value.user_reminder = [value.user_id + ", " + value.title + ", " + value.description];                      
+                        array.push(user_reminder);
+                    }
+                }
+            });
+                if (array.length > 0) {
+                    callback(null, array);
+                }
+                else {
+                    callback(null, "no reminder found at this time");
+                }
+        } 
+    });   
 }
 /**
  * @description:it will add the label

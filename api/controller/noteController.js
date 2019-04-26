@@ -406,8 +406,7 @@ exports.sendNotification=(req,res)=>{
         }
         catch(error)
         {
-            console.log(error);
-            
+            console.log(error);            
         }
 }
 /**
@@ -445,6 +444,6 @@ exports.addLabel = (req, res) => {
             })
         }
     } catch (error) {
-        res.send(error);
+        res.send(error);         
     }
 }
