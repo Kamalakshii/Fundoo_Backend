@@ -8,7 +8,7 @@
 
  const express = require('express');
 const bodyParser = require('body-parser');
-
+const noteService = require('../Server/api/services/noteService')
 /**
  *  To give path to each file
  */
@@ -72,12 +72,12 @@ const server = app.listen(4000, () => {
 
  var schedule = require('node-schedule');
 
-// var j = schedule.scheduleJob({ start: startTime, end: endTime, rule: '*/1 * * * * *' }, function(){
+// var j = schedule.scheduleJob({ rule: '*/1 * * * * *' }, function(){
 //   console.log('Time for tea!');
 // });
 
-var j = schedule.scheduleJob({ rule: '*/1 * * * * *' }, function(){
-
+var j = schedule.scheduleJob({ rule: '*/1 * * * *' }, function(){
+noteService.setReminder();
 });
 
 

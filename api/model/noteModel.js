@@ -303,7 +303,7 @@ noteModel.prototype.deleteNote = (data, callback) => {
         }
     })
 }
-noteModel.prototype.reminderMessage = (d1, d2, callback) => {
+noteModel.prototype.reminderMessage = (d1, d2, callback) => {      
     note.find((err, result) => {
             if (err) {
                 callback(err);
@@ -312,8 +312,12 @@ noteModel.prototype.reminderMessage = (d1, d2, callback) => {
                 var array = [];
                 result.forEach(function (value) {
                     if (value.reminder.length > 1) {
+                        console.log("REMI IS+++++++++++++",value.reminder);
+                        
                         if (value.reminder >= d1 && value.reminder <= d2) {
-                            value.user_reminder = [value.user_id + ", " + value.title + ", " + value.description];                      
+                            console.log("REM FOUND");
+                            
+                        user_reminder = [value.userId + ", " + value.title + ", " + value.description];                      
                         array.push(user_reminder);
                     }
                 }

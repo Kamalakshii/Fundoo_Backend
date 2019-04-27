@@ -20,7 +20,7 @@ exports.createNote = (data, callback) => {
             console.log("service error");
             callback(err);
         } else {
-           //  console.log("in service", result);
+            //  console.log("in service", result);
             callback(null, result);
         }
     });
@@ -35,7 +35,7 @@ exports.getNotes = (data, callback) => {
             console.log("service error");
             callback(err);
         } else {
-       // console.log("In service", result);
+            // console.log("In service", result);
             callback(null, result);
         }
     });
@@ -47,7 +47,7 @@ exports.getNotes = (data, callback) => {
  * @param {*} callback 
  */
 exports.updateColor = (paramID, paramData, callback) => {
-     console.log("in services", paramID, paramData);
+    console.log("in services", paramID, paramData);
     noteModel.updateColor(paramID, paramData, (err, result) => {
         if (err) {
             console.log("service error");
@@ -97,19 +97,19 @@ exports.isArchived = (paramID, paramData, callback) => {
  * @param {*} callback 
  */
 exports.isTrashed = (paramID, callback) => {
-   // console.log("in services", paramID);
+    // console.log("in services", paramID);
     noteModel.getTrashStatus(paramID, (err, status) => {
         if (err) {
             callback(err);
         } else {
             //console.log("status of that note in services",status);
-            
+
             if (status === true) {
                 let data = {
                     status: false
                 }
                 noteModel.isTrashed(paramID, data, (err, result) => {
-                   
+
                     if (err) {
                         console.log("service error");
                         callback(err);
@@ -199,53 +199,117 @@ exports.deleteNote = (noteID, callback) => {
         }
     })
 }
-exports.notification = (req , callback) => {
-    notificationModel.notification(req, (err,result) =>
-    {
-        if(err){
+exports.notification = (req, callback) => {
+    notificationModel.notification(req, (err, result) => {
+        if (err) {
             console.log("service error");
             callback(err);
         }
-        else{
-            return callback(null,result);
+        else {
+            return callback(null, result);
         }
     })
 }
-exports.sendNotification = (user_id,callback)=>{
-    notificationModel.sendNotification(user_id,(err,result)=>
-    {
-        if(err){
+exports.sendNotification = (user_id, callback) => {
+    notificationModel.sendNotification(user_id, (err, result) => {
+        if (err) {
             console.log("service error");
-    callback(err);            
+            callback(err);
         }
-        else{
-            console.log("in service",result);
+        else {
+            console.log("in service", result);
             sendPush.sendNotify(result);
-            return callback(null,result);
+            return callback(null, result);
         }
     })
 }
-exports.setReminder=()=>
-{
+exports.setReminder = () => {
+
+    let current_datetime = new Date()
+    let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth() + 01) + "/" + current_datetime.getFullYear() + ", " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+    //  let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds() 
+    console.log("000000000000000000000", formatted_date)
+
+    var as = new Date().toISOString()
+    var hold = as.split("T")
+    var dat = hold[0].split("-");
+    console.log("1111111111111111110", dat)
+    var dateonlyy = dat[2] + "/" + dat[1] + "/" + dat[0]
+    console.log("Date us jasdigasd", dateonlyy);
+
+
+
+
+
     var d1 = new Date();
     d2 = new Date(d1);
-    d2.setMinutes(d1.getMinutes()+1);
-    d1.toLocaleString();
-    d2.toLocaleString();
-    noteModel.reminderMessage(d1,d2,(err,result)=>
-    {
-        if(err){
+    d2.setMinutes(d1.getMinutes() + 1);
+    d1 = d1.toLocaleString();
+
+    var a = d1.split(",")
+    var swapdate1 = a[0].trim();
+    var x1 = swapdate1.split("/")
+
+    var timeonly = a[1].trim();
+    const [time, modifier] = timeonly.split(' ');
+    let [hours, minutes] = time.split(':');
+    if (hours === '12') {
+        hours = '00';
+    }   
+    if (modifier === 'PM') {
+        hours = parseInt(hours, 10) + 12;
+    }
+    var finalDate1 = dateonlyy + ", " + hours + ":" + minutes + ":00"
+    /***************** */
+    var as1 = new Date().toISOString()
+    var hold1 = as1.split("T")
+    var dat1 = hold1[0].split("-");
+    var dateonlyy1 = dat1[2] + "/" + dat1[1] + "/" + dat1[0]
+
+    d2 = d2.toLocaleString();
+    var a1 = d2.split(",")
+    var swapdate = a1[0].trim();
+    var x = swapdate.split("/")
+    //  var dateonly1 = x[1]+"/"+x[0]+"/"+x[2]
+    var timeonly1 = a1[1].trim();
+    const [time1, modifier1] = timeonly1.split(' ');
+    let [hours1, minutes1] = time1.split(':');
+    if (hours1 === '12') {
+        hours1 = '00';
+    }
+    if (modifier1 === 'PM') {
+        hours1 = parseInt(hours1, 10) + 12;
+    }
+    var finalDate2 = dateonlyy1 + ", " + hours1 + ":" + minutes1 + ":00"
+    console.log("DATE1=", finalDate1);
+    console.log("DATE2=", finalDate2);
+    //console.log("corrextdate=", corrextdate);
+    // corrextdate
+
+    noteModel.reminderMessage(finalDate1, finalDate2, (err, result) => {
+        if (err) {
             console.log("service error");
-            callback(err);
+            //  callback(err);
         }
-        else{
-            var temp = [];
-            temp[0] = user_id;
-            temp[1] = title;
-            temp[2] = description;
-            console.log("in service",result);
-            sendPush.sendNotify(result);
-            return callback(null,result)          
+        else {
+            if (Array.isArray(result)) {
+                var temp = result[0][0].split(",");
+                var userId = temp[0];
+                var title = temp[1];
+                var body = temp[2];
+                notificationModel.sendNotification(userId, (err, result) => {
+                    if (err) {
+                        console.log("service error");
+                    }
+                    else {
+                        sendPush.sendNotify(result, title, body);
+                    }
+                })
+            }
+            else {
+                console.log("SERVICE result= ", result);
+
+            }
         }
     })
 }

@@ -5,17 +5,17 @@ admin.initializeApp({
   databaseURL: "https://fundoo-f7774.firebaseio.com"
 });
 module.exports ={
-   sendNotify(token){
+   sendNotify(token,title,body){
   var registrationToken = token;
   var payload = {
     notification: {
-      title: "testing notifications",
-       body: "its proper"
+      title: title,
+       body: body
     }
   };
   var options = {
     priority: "high",
-    timeToLive: 60 * 60
+    timeToLive: 60 * 60 *24
   };
   admin.messaging().sendToDevice(registrationToken, payload, options)
   .then(function(response) {
