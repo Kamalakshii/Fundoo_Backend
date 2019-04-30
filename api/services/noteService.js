@@ -228,17 +228,14 @@ exports.setReminder = () => {
     let current_datetime = new Date()
     let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth() + 01) + "/" + current_datetime.getFullYear() + ", " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
     //  let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds() 
-    console.log("000000000000000000000", formatted_date)
+    //console.log("000000000000000000000", formatted_date)
 
     var as = new Date().toISOString()
     var hold = as.split("T")
     var dat = hold[0].split("-");
-    console.log("1111111111111111110", dat)
+   // console.log("1111111111111111110", dat)
     var dateonlyy = dat[2] + "/" + dat[1] + "/" + dat[0]
-    console.log("Date us jasdigasd", dateonlyy);
-
-
-
+    console.log("Date is", dateonlyy);
 
 
     var d1 = new Date();
@@ -283,8 +280,8 @@ exports.setReminder = () => {
     var finalDate2 = dateonlyy1 + ", " + hours1 + ":" + minutes1 + ":00"
     console.log("DATE1=", finalDate1);
     console.log("DATE2=", finalDate2);
-    //console.log("corrextdate=", corrextdate);
-    // corrextdate
+    
+   
 
     noteModel.reminderMessage(finalDate1, finalDate2, (err, result) => {
         if (err) {
@@ -328,3 +325,49 @@ exports.addLabel = (labelData, callback) => {
         }
     })
 }
+/**
+ * @description:it will send get label data to model
+ * @param {*request from frontend} labelData 
+ * @param {*response to backend} callback 
+ */
+exports.getLabels = (labelData, callback) => {
+    noteModel.getLabels(labelData, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+/**
+ * @description:it will send delete label data to model
+ * @param {*request from frontend} labelData 
+ * @param {*response to backend} callback 
+ */
+exports.deleteLabel = (labelData, callback) => {
+    noteModel.deleteLabel(labelData, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+/**
+ * @description:it will send update label data to model
+ * @param {*request from frontend} labelData 
+ * @param {*response to backend} callback 
+ */
+exports.updateLabel = (labelData, callback) => {
+    noteModel.updateLabel(labelData, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+

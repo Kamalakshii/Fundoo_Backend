@@ -23,4 +23,8 @@ router.post('/deleteNote', middle.checkToken, noteController.deleteNote);
 router.post('/notification', middle.checkToken, noteController.notification);
 router.get('/sendNotification/:userId', noteController.sendNotification);
 router.post('/addLabel', middle.checkToken, labelController.addLabel);
+router.get('/getLabels', middle.checkToken, labelController.getLabels);
+router.post('/deleteLabel', middle.checkToken, labelController.deleteLabel);
+router.put('/updateLabel', middle.checkToken, labelController.updateLabel);
+
 module.exports = router;

@@ -377,8 +377,7 @@ exports.notification = (req, res) => {
 }
 exports.sendNotification=(req,res)=>{
     try{
-       console.log("userId is",req.params.userId);
-       
+       console.log("userId is",req.params.userId);      
         var errors = req.validationErrors();
         var response = {};
         if(errors){
@@ -445,5 +444,115 @@ exports.addLabel = (req, res) => {
         }
     } catch (error) {
         res.send(error);         
+    }
+}
+/**
+ * @description:It handles the get labels
+ * @param {*request from frontend} req 
+ * @param {*response from backend} res 
+ */
+exports.getLabels = (req, res) => {
+    try {
+        // req.checkBody('userID', 'userID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            const labelData = {
+                userID: req.decoded.payload.user_id,
+            }
+            labelService.getLabels(labelData, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error);
+    }
+}
+/**
+ * @description:It handles the delete labels from notes
+ * @param {*request from frontend} req 
+ * @param {*response from backend} res 
+ */
+exports.deleteLabel = (req, res) => {
+    try {
+        req.checkBody('labelID', 'labelID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            const labelData = {
+                labelID: req.body.labelID,
+            }
+            labelService.deleteLabel(labelData, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error);
+    }
+}
+/**
+ * @description:It handles the update the labels
+ * @param {*request from frontend} req 
+ * @param {*response from backend} res 
+ */
+exports.updateLabel = (req, res) => {
+    try {
+        req.checkBody('labelID', 'labelID required').not().isEmpty();
+        req.checkBody('editLabel', 'editLabel required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            const labelData = {
+                editLabel: req.body.editLabel,
+                labelID: req.body.labelID
+            }
+            labelService.updateLabel(labelData, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error);
     }
 }

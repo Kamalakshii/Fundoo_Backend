@@ -312,7 +312,7 @@ noteModel.prototype.reminderMessage = (d1, d2, callback) => {
                 var array = [];
                 result.forEach(function (value) {
                     if (value.reminder.length > 1) {
-                        console.log("REMI IS+++++++++++++",value.reminder);
+                   //     console.log("REMI IS+++++++++++++",value.reminder);
                         
                         if (value.reminder >= d1 && value.reminder <= d2) {
                             console.log("REM FOUND");
@@ -349,4 +349,71 @@ noteModel.prototype.addLabel = (labelData, callback) => {
         }
     })
 };
+/**
+ * @description:it will get the labels
+ * @param {*request from frontend} id 
+ * @param {*response to backend} callback 
+ */
+noteModel.prototype.getLabels = (id, callback) => {
+    console.log("in model", id);
+    label.find({ userID: id.userID }, (err, result) => {
+        if (err) {
+            callback(err)
+        } else {
+            console.log("labels", result)
+            return callback(null, result)
+        }
+    })
+};
+/**
+ * @description:it will delete the label
+ * @param {*request from frontend} id 
+ * @param {*response to backend} callback 
+ */
+noteModel.prototype.deleteLabel = (id, callback) => {
+    console.log("in model", id);
+    label.deleteOne({ _id: id.labelID }, (err, result) => {
+        if (err) {
+            callback(err)
+        } else {
+            console.log("labels", result)
+            return callback(null, result)
+        }
+    })
+};
+/**
+ * @description:it will update the exixting label
+ * @param {*request from frontend} changedLabel 
+ * @param {*response to backend} callback 
+ */
+noteModel.prototype.updateLabel = (changedLabel, callback) => {
+    var editLabel = null;
+    var labelId = null;
+    console.log("in model", changedLabel);
+    if (changedLabel != null) {
+        editLabel = changedLabel.editLabel;
+        labelId = changedLabel.labelID
+    } else {
+        callback("Pinned note not found")
+    }
+    label.findOneAndUpdate(
+        {
+            _id: labelId
+        },
+        {
+            $set: {
+                label: editLabel
+            }
+        },
+        (err, result) => {
+            if (err) {
+                console.log("in modelerr");
+                callback(err)
+            } else {
+                console.log("in modelsuccess");
+                return callback(null, changedLabel)
+            }
+        });
+};
+
 module.exports = new noteModel();
