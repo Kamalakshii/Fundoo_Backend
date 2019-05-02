@@ -316,6 +316,8 @@ exports.setReminder = () => {
  * @param {*response to backend} callback 
  */
 exports.addLabel = (labelData, callback) => {
+   // console.log("label data in services.....",labelData);
+    
     noteModel.addLabel(labelData, (err, result) => {
         if (err) {
             console.log("service error");

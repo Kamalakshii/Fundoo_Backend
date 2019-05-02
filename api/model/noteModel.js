@@ -66,7 +66,6 @@ var labelSchema = new mongoose.Schema({
     }
 )
 var label = mongoose.model('Label', labelSchema)
-
 function noteModel() { }
 var note = mongoose.model('Note', noteSchema);
 noteModel.prototype.addNotes = (objectNote, callback) => {
