@@ -556,3 +556,74 @@ exports.updateLabel = (req, res) => {
         res.send(error);
     }
 }
+/**
+ * @description:It handles the save labels to notes
+ * @param {*request from frontend} req 
+ * @param {*response from backend} res 
+ */
+exports.saveLabelToNote = (req, res) => {
+    try {
+        req.checkBody('noteID', 'noteID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            noteID = req.body.noteID;
+            noteService.saveLabelToNote(req.body, (err, result) => {
+                if (err) {
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                } else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}
+/**
+ * @description:It handles the delete labels from notes
+ * @param {*request from frontend} req 
+ * @param {*response from backend} res 
+ */
+exports.deleteLabelToNote = (req, res) => {
+    try {
+        console.log("in controller of delete",req.body);
+        
+        req.checkBody('noteID', 'noteID required').not().isEmpty();
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        } else {
+            var responseResult = {};
+            noteID = req.body.noteID;
+            noteService.deleteLabelToNote(req.body, (err, result) => {
+                if (err) {
+                    console.log("err in controller");
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                } else {
+                    responseResult.status = true;
+                    responseResult.data = result;
+                    console.log("res in controller",responseResult);
+                    
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}

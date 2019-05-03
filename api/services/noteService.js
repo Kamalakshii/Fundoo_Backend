@@ -372,4 +372,50 @@ exports.updateLabel = (labelData, callback) => {
         }
     })
 }
+/**
+ * @description:it will send save label data to model
+ * @param {*request from frontend} paramData 
+ * @param {*response to backend} callback 
+ */
+exports.saveLabelToNote = (paramData, callback) => {
+    console.log("in save label.........",paramData);  
+    if (paramData.pull) {
+        noteModel.deleteLabelToNote(paramData, (err, result) => {
+            if (err) {
+                console.log("service error");
+                callback(err);
+            } else {
+                return callback(null, result)
+            }
+        })
+    }
+    else {
+        noteModel.saveLabelToNote(paramData, (err, result) => {
+            if (err) {
+                console.log("service error");
+                callback(err);
+            } else {
+                return callback(null, result)
+            }
+        })
+    }
+}
+/**
+ * @description:it will send delete label data to model
+ * @param {*request from frontend} paramData 
+ * @param {*response to backend} callback 
+ */
+exports.deleteLabelToNote = (paramData, callback) => {
+    console.log("in services of delete",paramData);
+    
+    noteModel.deleteLabelToNote(paramData, (err, result) => {
+        if (err) {
+            console.log("service error");
+            callback(err);
+        } else {
+            console.log("res in service",result);          
+            return callback(null, result)
+        }
+    })
+}
 

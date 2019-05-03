@@ -76,7 +76,7 @@ const server = app.listen(4000, () => {
 //   console.log('Time for tea!');
 // });
 
-var j = schedule.scheduleJob({ rule: '*/1 * * * *' }, function(){
+var j = schedule.scheduleJob({ rule: '*/10 * * * * ' }, function(){
 noteService.setReminder();
 });
 

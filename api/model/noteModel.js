@@ -50,7 +50,9 @@ var noteSchema = new mongoose.Schema({
     {
         timestamps: true
     });
-
+/**
+ * @description:Creating label schema using mongoose
+ **/
 var labelSchema = new mongoose.Schema({
     userID: {
         type: Schema.Types.ObjectId,
@@ -330,6 +332,8 @@ noteModel.prototype.reminderMessage = (d1, d2, callback) => {
         } 
     });   
 }
+
+
 /**
  * @description:it will add the label
  * @param {*request from frontend} labelData 
@@ -414,5 +418,81 @@ noteModel.prototype.updateLabel = (changedLabel, callback) => {
             }
         });
 };
+/**
+ * @description:it will save the label to note
+ * @param {*request from frontend} labelParams 
+ * @param {*response to backend} callback 
+ */
+noteModel.prototype.saveLabelToNote = (labelParams, callback) => {
+    console.log("in model", labelParams.noteID);
+    var labelledNote = null;
+    var noteID = null;
+    if (labelParams != null) {
+        labelledNote = labelParams.label;
+        noteID = labelParams.noteID;
+    } else {
+        callback("Pinned note not found")
+    }
+    note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $push: {
+                label: labelledNote,
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                console.log("in model success");
+                let res = result.label;
+                res.push(labelledNote);
+                return callback(null, res)
+            }
+        });
+};
+/**
+ * @description:it will delete the label from note
+ * @param {*request from frontend} labelParams 
+ * @param {*response to backend} callback 
+ */
+noteModel.prototype.deleteLabelToNote = (labelParams, callback) => {
+    console.log("in model", labelParams.noteID);
+    var labelledNote = null;
+    var noteID = null;
+    if (labelParams != null) {
+        labelledNote = labelParams.label;
+        noteID = labelParams.noteID;
+    } else {
+        callback("Pinned note not found")
+    }
+    note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $pull: {
+                label: labelledNote,
+            }
+        },
+        (err, result) => {
+            if (err) {
+                console.log("err in model");
+                
+                callback(err)
+            } else {
+                let newArray = result.label;
+                console.log("in model success result", result);
 
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i] === labelledNote) {
+                        newArray.splice(i, 1);
+                        return callback(null, newArray)
+                    }
+                }
+            }
+        });
+};
 module.exports = new noteModel();
