@@ -50,6 +50,7 @@ var noteSchema = new mongoose.Schema({
     {
         timestamps: true
     });
+
 /**
  * @description:Creating label schema using mongoose
  **/
@@ -316,8 +317,7 @@ noteModel.prototype.reminderMessage = (d1, d2, callback) => {
                    //     console.log("REMI IS+++++++++++++",value.reminder);
                         
                         if (value.reminder >= d1 && value.reminder <= d2) {
-                            console.log("REM FOUND");
-                            
+                            console.log("REM FOUND");                         
                         user_reminder = [value.userId + ", " + value.title + ", " + value.description];                      
                         array.push(user_reminder);
                     }

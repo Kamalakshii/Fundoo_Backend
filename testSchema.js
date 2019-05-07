@@ -78,7 +78,6 @@ describe('schema validation of registration', () => {
             }
         });
         });
-
         describe('login should be successfull', () => {
         it('should return false instead of true', () => {
            

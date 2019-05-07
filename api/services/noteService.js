@@ -305,8 +305,20 @@ exports.setReminder = () => {
             }
             else {
                 console.log("SERVICE result= ", result);
-
             }
+        }
+    })
+}
+exports.updateSequenceNum = (paramData,callback)=>{
+    noteModel.updateSequenceNum(paramData,(err,result)=>{
+        if(err)
+        {
+            callback(err);
+        }else{
+         const DATA = {
+             sequenceNum : 1,
+             noteID : ""
+         }
         }
     })
 }
@@ -317,7 +329,6 @@ exports.setReminder = () => {
  */
 exports.addLabel = (labelData, callback) => {
    // console.log("label data in services.....",labelData);
-    
     noteModel.addLabel(labelData, (err, result) => {
         if (err) {
             console.log("service error");
@@ -406,8 +417,7 @@ exports.saveLabelToNote = (paramData, callback) => {
  * @param {*response to backend} callback 
  */
 exports.deleteLabelToNote = (paramData, callback) => {
-    console.log("in services of delete",paramData);
-    
+    console.log("in services of delete",paramData);    
     noteModel.deleteLabelToNote(paramData, (err, result) => {
         if (err) {
             console.log("service error");
@@ -418,4 +428,5 @@ exports.deleteLabelToNote = (paramData, callback) => {
         }
     })
 }
+
 

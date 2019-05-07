@@ -5,8 +5,7 @@
  *  @author         : KAMALAKSHI C SWAMY
  *  @since          : 04-03-2019
  ******************************************************************************/
-
- const express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const noteService = require('../Server/api/services/noteService')
 /**

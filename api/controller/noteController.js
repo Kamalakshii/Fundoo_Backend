@@ -346,7 +346,6 @@ exports.deleteNote = (req, res) => {
 exports.notification = (req, res) => {
     try {
        // console.log("in controllerrrrrrrrrrr", req);
-
         req.checkBody('pushToken', 'pushToken required').not().isEmpty();
         var errors = req.validationErrors();
         var response = {};
@@ -399,7 +398,6 @@ exports.sendNotification=(req,res)=>{
                     responseResult.data = "Notification sent";
                     res.status(200).send(responseResult);
                 }
-
             })
         }
         }
@@ -596,8 +594,7 @@ exports.saveLabelToNote = (req, res) => {
  */
 exports.deleteLabelToNote = (req, res) => {
     try {
-        console.log("in controller of delete",req.body);
-        
+        console.log("in controller of delete",req.body);      
         req.checkBody('noteID', 'noteID required').not().isEmpty();
         var errors = req.validationErrors();
         var response = {};
@@ -626,4 +623,34 @@ exports.deleteLabelToNote = (req, res) => {
     } catch (error) {
         res.send(error)
     }
+}
+exports.updateSequenceNum = (req ,res) => {
+    try{
+        req.checkBody('noteID','NoteID required').not().isEmpty();
+        var errors =req.validationErrors();
+        var response = {};
+        if(errors){
+            response.status = false;
+            response.error = errors;
+            return res.status(422).send(response);
+        }
+        else{
+            var responseResult = {};
+            noteID = req.body.noteID;
+            noteService.updateSequenceNum(req.body,(err,result)=>{
+                if(err){
+                    responseResult.status = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }
+                else{
+                    responseresult.status = true;
+                    responseResult.data = result;
+                    res.status(200).send(responseResult);
+                }
+            })
+        }
+       }   catch(error){
+           res.send(error);
+       }
 }
