@@ -40,6 +40,7 @@ exports.getNotes = (data, callback) => {
         }
     });
 }
+
 /**
  * 
  * @param {*} paramID 

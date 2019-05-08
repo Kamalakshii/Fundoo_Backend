@@ -17,7 +17,13 @@ const router1 = require("./api/routes/notesRouter")
  * to create express app
 */
  const app = express(); 
+/** 
+If the data was sent as JSON, using Content-Type: application/x-www-form-urlencoded 
+*/
 app.use(bodyParser.urlencoded({ extended: true }))
+/**
+ * If the data was sent as JSON, using Content-Type: application/json ,
+ */
 app.use(bodyParser.json())
 /** 
  * To perform validations
@@ -57,7 +63,7 @@ require("http").createServer(app);
     app.use("/",router);
     app.use("/",router1);
 /** 
- *  define a simple router
+ *  define a simple router and sending a JSON response 
 */ 
 app.get('/', (req, res) => {
     res.json("Welcome to Fundoo");
