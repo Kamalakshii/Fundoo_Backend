@@ -1,5 +1,5 @@
 /******************************************************************************
- *  @Purpose        : Create nodemailer to allow easy email sending . 
+ *  @Purpose        : Create nodemailer to allow easy email sending. 
  *  @file           : nodemailer.js        
  *  @author         : KAMALAKSHI C SWAMY
  *  @since          : 07-03-2019

@@ -1,7 +1,8 @@
 const redis = require('redis');
+ //creates a new client
 const client = redis.createClient();
 const query = 'notes-'
-
+//to listen for error
 client.on('error', (err) => {
     console.error(err);
 });
@@ -9,8 +10,7 @@ module.exports = {
     userNotes(data, callback) {
         client.get(query + data, (err, result) => {
             if (result) {
-                console.log("RESULT_________________",result);
-                
+                console.log("RESULT_________________",result);               
                 callback(null, result);
             } else {
                 console.error("REDIS ERROR: ", err);

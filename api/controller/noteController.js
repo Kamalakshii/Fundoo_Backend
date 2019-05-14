@@ -75,7 +75,6 @@ exports.getNotes = (req, res) => {
 
                     } else {
                         // sending the status code to the response along with our object
-
                         responseResult.status = false;
                         responseResult.message = 'Failed to generate note';
                         responseResult.error = error;
