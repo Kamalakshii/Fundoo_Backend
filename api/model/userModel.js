@@ -191,5 +191,4 @@ userModel.prototype.setProfilePic = (userID, image, callback) => {
             }
         });
 };
-
 module.exports = new userModel();

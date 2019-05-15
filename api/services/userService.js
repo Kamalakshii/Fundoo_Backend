@@ -19,7 +19,7 @@ exports.login = (data, callback) => {
                 callback(err);
             }
             else {
-             //   console.log("In service", result);
+                //   console.log("In service", result);
                 callback(null, result);
             }
         })
@@ -82,7 +82,7 @@ exports.resetpassword = (data, callback) => {
         callback.send(error);
     }
 }
-  exports.setProfilePic = (paramID, image, callback) => {
+exports.setProfilePic = (paramID, image, callback) => {
     // console.log("in services");
     try {
         userModel.setProfilePic(paramID, image, (err, result) => {
@@ -90,10 +90,10 @@ exports.resetpassword = (data, callback) => {
                 console.log("service error in setProfile pic");
                 callback(err);
             } else {
-                 callback(null, result)
+                callback(null, result)
             }
         })
     } catch (error) {
         callback.send(error);
     }
-  }
+}

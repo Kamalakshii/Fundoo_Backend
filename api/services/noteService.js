@@ -40,7 +40,6 @@ exports.getNotes = (data, callback) => {
         }
     });
 }
-
 /**
  * 
  * @param {*} paramID 
@@ -228,13 +227,9 @@ exports.setReminder = () => {
 
     let current_datetime = new Date()
     let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth() + 01) + "/" + current_datetime.getFullYear() + ", " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
-    //  let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds() 
-    //console.log("000000000000000000000", formatted_date)
-
     var as = new Date().toISOString()
     var hold = as.split("T")
     var dat = hold[0].split("-");
-   // console.log("1111111111111111110", dat)
     var dateonlyy = dat[2] + "/" + dat[1] + "/" + dat[0]
     console.log("Date is", dateonlyy);
 
@@ -268,7 +263,6 @@ exports.setReminder = () => {
     var a1 = d2.split(",")
     var swapdate = a1[0].trim();
     var x = swapdate.split("/")
-    //  var dateonly1 = x[1]+"/"+x[0]+"/"+x[2]
     var timeonly1 = a1[1].trim();
     const [time1, modifier1] = timeonly1.split(' ');
     let [hours1, minutes1] = time1.split(':');

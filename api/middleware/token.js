@@ -15,8 +15,6 @@ module.exports = {
     };
     return obj;
   },
-
-
   GenerateTokenAuth(payload) {
     const token = jwt.sign({ payload }, "secretkey-auth", { expiresIn: "100d" });
     const obj = {

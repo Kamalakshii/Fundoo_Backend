@@ -74,15 +74,6 @@ var note = mongoose.model('Note', noteSchema);
 noteModel.prototype.addNotes = (objectNote, callback) => {
     console.log("data====>", objectNote.body);
     const noteModel = new note(objectNote.body);
-    //   const noteModel = new note({
-    //     "userId": req.body.userId,
-    //     "title": req.body.title,
-    //     "description": req.body.description,
-    //     "reminder": req.body.reminder,
-    //     "color": req.body.color,
-    //     "archive": req.body.archive,
-    //     "trash": req.body.trash
-    // });
     noteModel.save((err, result) => {
         if (err) {
             callback(err);
@@ -286,7 +277,7 @@ noteModel.prototype.isPinned = (noteID, pinParams, callback) => {
         });
 };
 /**
- * @description:
+ * @description:it will delete the note
  * @param {*} data 
  * @param {*} callback 
  */
@@ -305,32 +296,32 @@ noteModel.prototype.deleteNote = (data, callback) => {
         }
     })
 }
-noteModel.prototype.reminderMessage = (d1, d2, callback) => {      
+noteModel.prototype.reminderMessage = (d1, d2, callback) => {
     note.find((err, result) => {
-            if (err) {
-                callback(err);
-            }
-            else {
-                var array = [];
-                result.forEach(function (value) {
-                    if (value.reminder.length > 1) {
-                   //     console.log("REMI IS+++++++++++++",value.reminder);
-                        
-                        if (value.reminder >= d1 && value.reminder <= d2) {
-                            console.log("REM FOUND");                         
-                        user_reminder = [value.userId + ", " + value.title + ", " + value.description];                      
+        if (err) {
+            callback(err);
+        }
+        else {
+            var array = [];
+            result.forEach(function (value) {
+                if (value.reminder.length > 1) {
+                    //     console.log("REMI IS+++++++++++++",value.reminder);
+
+                    if (value.reminder >= d1 && value.reminder <= d2) {
+                        console.log("REM FOUND");
+                        user_reminder = [value.userId + ", " + value.title + ", " + value.description];
                         array.push(user_reminder);
                     }
                 }
             });
-                if (array.length > 0) {
-                    callback(null, array);
-                }
-                else {
-                    callback(null, "no reminder found at this time");
-                }
-        } 
-    });   
+            if (array.length > 0) {
+                callback(null, array);
+            }
+            else {
+                callback(null, "no reminder found at this time");
+            }
+        }
+    });
 }
 
 
@@ -480,7 +471,7 @@ noteModel.prototype.deleteLabelToNote = (labelParams, callback) => {
         (err, result) => {
             if (err) {
                 console.log("err in model");
-                
+
                 callback(err)
             } else {
                 let newArray = result.label;

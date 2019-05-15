@@ -1,3 +1,9 @@
+/******************************************************************************
+ *  @Purpose        : To create a redis cache
+ *  @file           : userModel.js        
+ *  @author         : KAMALAKSHI C SWAMY
+ *  @since          : 10-05-2019
+ ******************************************************************************/
 const redis = require('redis');
  //creates a new client
 const client = redis.createClient();
